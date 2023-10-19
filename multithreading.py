@@ -6,7 +6,8 @@ from struct import *
 
 
 def receiver():
-    def listen(fragments):
+    def listen(fragments):      # Listens for fragments of data, validates them using a CRC check, and acknowledges the sender.
+        # It continues listening until all fragments are received, and then reconstructs the original data.
         data_stream = []
         data_received = []
         for i in range(fragments):
@@ -99,7 +100,7 @@ def sender():
         spacer()
         return temp
 
-    def initiate(client_address):
+    def initiate(client_address): #Attempts to establish a connection with a client. Retries if unsuccessful.
         c = 0
         client_socket.settimeout(0.5)
         while c < 5:
@@ -121,7 +122,7 @@ def sender():
         client_socket.settimeout(None)
         return -1
 
-    def send_msg(client_address):
+    def send_msg(client_address):   #Takes user input for a text message and sends it to a specified client.
         msg = input("Enter message to send: ")
         msg = msg.encode('utf-8')
 
@@ -130,7 +131,7 @@ def sender():
 
         send_data(msg, 5, sim, client_address)
 
-    def send_file(client_address):
+    def send_file(client_address):                  # Takes a file path, reads the file, and sends it in fragments to a specified client.
         path = input("Enter filepath for file:")
         filename = ntpath.basename(path)
         filename = filename.encode('utf-8')
@@ -147,7 +148,7 @@ def sender():
 
         send_data(file_data, 6, sim, client_address)
 
-    def end_conn(client_address):
+    def end_conn(client_address):           # Attempts to terminate the connection with a client. Retries if unsuccessful.
         c = 0
         client_socket.settimeout(0.5)
         while c < 5:
@@ -170,7 +171,7 @@ def sender():
         client_socket.settimeout(None)
         return -1
 
-    def send_data(data, msg_type, simulate_faults, client_address):
+    def send_data(data, msg_type, simulate_faults, client_address):             # Sends data in fragments to a specified client with error simulation options.
         data_stream = []
         data_confirmed = []
 
