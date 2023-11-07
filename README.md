@@ -1,4 +1,4 @@
-# UDP-based-Multithreaded-TFTP-client-server
+# UDP-based-Multithreaded-client-server
 
 On execution, there are two main options:
 
